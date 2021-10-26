@@ -74,7 +74,6 @@ func shorten(c *gin.Context) {
 	}
 
 	urlCode, idErr := shortid.Generate()
-	log.Print(urlCode)
 	if idErr != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": idErr.Error()})
 		return
@@ -87,7 +86,7 @@ func shorten(c *gin.Context) {
 		if queryErr == mongo.ErrNoDocuments {
 			log.Print("No Document")
 		} else {
-			c.JSON(http.StatusBadRequest, gin.H{"error": queryErr.Error()})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": queryErr.Error()})
 			return
 		}
 	}
@@ -131,7 +130,7 @@ func redirect(c *gin.Context) {
 			c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("No URL with code: %s", code)})
 			return
 		} else {
-			c.JSON(http.StatusBadRequest, gin.H{"error": queryErr.Error()})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": queryErr.Error()})
 			return
 		}
 	}
