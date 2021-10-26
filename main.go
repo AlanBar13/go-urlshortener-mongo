@@ -97,8 +97,7 @@ func shorten(c *gin.Context) {
 	}
 
 	var date = time.Now()
-	var expires = date.Add(60 * time.Minute)
-	//var expires = date.AddDate(0, 0, 5)
+	var expires = date.AddDate(0, 0, 5)
 	var newUrl = baseUrl + urlCode
 	log.Print(newUrl)
 	var docId = primitive.NewObjectID()
