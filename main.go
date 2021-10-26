@@ -91,6 +91,11 @@ func shorten(c *gin.Context) {
 		}
 	}
 
+	if len(result) > 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("Code in use: %s", urlCode)})
+		return
+	}
+
 	var date = time.Now()
 	var expires = date.Add(60 * time.Minute)
 	//var expires = date.AddDate(0, 0, 5)
