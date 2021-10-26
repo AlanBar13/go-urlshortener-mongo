@@ -83,9 +83,7 @@ func shorten(c *gin.Context) {
 	queryErr := collection.FindOne(ctx, bson.D{{"urlCode", urlCode}}).Decode(&result)
 
 	if queryErr != nil {
-		if queryErr == mongo.ErrNoDocuments {
-			log.Print("No Document")
-		} else {
+		if queryErr != mongo.ErrNoDocuments {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": queryErr.Error()})
 			return
 		}
